@@ -6,21 +6,25 @@ October 19 2023
 Period 7
  */
 
-
 import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
+
+        // bool to see if the game is running
         boolean gameRunning = true;
 
+        //create a new game object
         Game game = new Game();
-
 
         Scanner scanner = new Scanner(System.in);
 
+        //while loop to keep it till before the user quits
         while (gameRunning) {
             System.out.print("Enter a direction: ");
             String userInput = scanner.nextLine();
+
+            //calling the direction method from game
             Direction direction = game.parseDirection(userInput);
 
             // Check if the user wants to quit
@@ -33,7 +37,6 @@ public class Main {
                 game.movePlayer(direction); // Pass the parsed direction to movePlayer
             }
         }
-
         // Close the scanner at the end
         scanner.close();
     }

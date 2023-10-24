@@ -6,29 +6,35 @@ October 19 2023
 Period 7
  */
 public class Game {
-    private int[][] gameMap; // Declare a fixed 2D array
+
+    //declare the game variables
+
     private int playerX; // Player's x-coordinate
     private int playerY; // Player's y-coordinate
     private int wallHitCounter;
 
     public Game() {
+        //initialize the game variables
         initializeGameMap();
-        playerX = gameMap.length / 2;
-        playerY = gameMap[0].length / 2;
+
     }
 
     // Method to initialize the game map
     private void initializeGameMap() {
-        gameMap = new int[24][24];
+        playerX = 12;
+        playerY = 12;
 
     }
 
     public void printPlayerPosition() {
-        System.out.println("Player's Position: X=" + playerX + ", Y=" + playerY);
+        System.out.printf("(%d,%d) \n",playerX,playerY);
     }
+    // Method to parse the user input and return a Direction enum
 
     public Direction parseDirection(String userInput) {
         userInput = userInput.toLowerCase();
+
+        //creating the switch statement to parse the direction with 2 arguments
         return switch (userInput) {
             case "north", "n" -> Direction.NORTH;
             case "south", "s" -> Direction.SOUTH;
@@ -45,16 +51,16 @@ public class Game {
 
         switch (direction) {
             case NORTH:
-                newX--;
+                newY--;
                 break;
             case SOUTH:
-                newX++;
-                break;
-            case EAST:
                 newY++;
                 break;
+            case EAST:
+                newX++;
+                break;
             case WEST:
-                newY--;
+                newX--;
                 break;
         }
 
@@ -64,6 +70,7 @@ public class Game {
             playerY = newY;
             printPlayerPosition();
         } else {
+            // Print an error message if the new position is invalid
             System.out.println("You can't move in that direction. You've hit a wall.");
 
             // Increment the wall hit counter
@@ -71,22 +78,23 @@ public class Game {
 
             // Check if the counter has reached the threshold (e.g., 5 times)
             if (wallHitCounter >= 5) {
+                //trigger the action to show that the player has hit the wall 5 times
                 triggerAction(); // Execute the action when the threshold is reached
             }
         }
     }
 
     private void triggerAction() {
+
+        //print the action
         System.out.println("you hit the wall 5 time you get a knife");
-        // Implement your desired action here
+        wallHitCounter = 0;
+
     }
 
     private boolean isValidPosition(int x, int y) {
-        // Add logic to check if (x, y) is a valid position in the game map
-        // This may involve checking bounds and other game-specific conditions
-        // Return true if valid, false otherwise
-        return x >= 0 && x < gameMap.length && y >= 0 && y < gameMap[0].length;
+        return x >= 0 && x <= 12 && y >= 0 && y <= 12;
     }
 
-    // Add other game-related methods and fields here
+
 }
