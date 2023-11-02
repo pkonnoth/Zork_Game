@@ -11,5 +11,13 @@ public enum Direction {
     EAST,
     WEST,
     QUIT,
+    PickUP,
+    DROP,
+    HELP,
+    BACKPACK,
+    SCAN,
+    INFO,
+    USE,
     INVALID
+
 }

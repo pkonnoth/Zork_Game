@@ -1,24 +1,26 @@
-/*
-Pettrus Konnoth
-AP CSA
-Zork Game
-October 19 2023
-Period 7
-Item Class
- */
-
-public class Item {
+public class Hazard {
     private String name;
     private String description;
     private int x;
     private int y;
+    private String requiredItem;
 
-    public Item(String name, String description, int x, int y) {
+    public Hazard(String name, String description, int x, int y, String requiredItem) {
+        // Constructor for Hazard
         this.name = name;
         this.description = description;
         this.x = x;
         this.y = y;
+        this.requiredItem = requiredItem;
     }
+
+    public String getRequiredItem() {
+        return requiredItem;
+    }
+
+
+
+    // Getters for name, description, x, and y
 
 
     public String getName() {
@@ -51,16 +53,5 @@ public class Item {
 
     public void setY(int y) {
         this.y = y;
-    }
-
-
-
-    public String toString() {
-        return "Item{" +
-                "name='" + name + '\'' +
-                ", description='" + description + '\'' +
-                ", x=" + x +
-                ", y=" + y +
-                '}';
     }
 }
