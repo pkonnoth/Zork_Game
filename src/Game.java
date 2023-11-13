@@ -29,6 +29,9 @@ public class Game {
     private int wallHeight = 24;
     private int wallHitCounter;
 
+    // this is for the 2d array
+    private String[][] gameMap;
+
     private ArrayList<Item> backPack;
 
     private Item[][] itemsOnMap;
@@ -56,6 +59,8 @@ public class Game {
         Hazard covidVirus = new Hazard("Covid Virus", "A dangerous virus", 8, 8, "vaccine");
         hazards.add(covidVirus);
 
+        Hazard monster = new Hazard("Monster", "A dangerous monster", 14, 11, "knife");
+        hazards.add(monster);
         System.out.println("You stand at the heart of a city under lockdown. The once bustling streets are now empty, the city's vibrant life subdued by the relentless pandemic. The stillness is eerie as you navigate the desolate streets, searching for signs of life. What would you like to do?\n");
 
     }
@@ -90,6 +95,15 @@ public class Game {
             System.out.println("You dropped the " + item.getName());
         } else {
             System.out.println("Your backpack is empty. There's nothing to drop.");
+        }
+    }
+
+    private void initalize2dArray() {
+        gameMap = new String[wallLength][wallHeight];
+        for (int i = 0; i < wallLength; i++) {
+            for (int j = 0; j < wallHeight; j++) {
+                gameMap[i][j] = " ";
+            }
         }
     }
 
@@ -203,6 +217,7 @@ public class Game {
                 String userInput = scanner.nextLine();
                 handleHazard(userInput, newX, newY);
 
+                // Update the player's position only if the movement was successful
                 playerY = newY;
                 playerX = newX;
             } else {
@@ -210,9 +225,12 @@ public class Game {
                 Item item = itemsOnMap[newX][newY];
                 if (item != null) {
                     System.out.println("You found an item: " + item.getName());
+                } else {
+                    // Print a message when there is neither a hazard nor an item
+                    System.out.println("There's nothing here.");
                 }
 
-                // Update the player's position
+                // Update the player's position only if the movement was successful
                 playerX = newX;
                 playerY = newY;
             }
@@ -234,24 +252,35 @@ public class Game {
 
 
     private void handleHazard(String userInput, int x, int y) {
-        Hazard hazard = getHazardAtLocation(x, y);
-        if (hazard != null) {
-            if ("use".equalsIgnoreCase(userInput)) {
+        Hazard hazard = getHazardAtLocation(playerX, playerY);
+
+        if ("use".equalsIgnoreCase(userInput)) {
+            if (hazard != null) {
                 if (hasRequiredItemToDefeatHazard(hazard)) {
                     System.out.println("You successfully used the required item to deal with the hazard: " + hazard.getName());
                     hazards.remove(hazard); // Remove the hazard from the list
                 } else {
                     System.out.println("You don't have the required item to deal with the hazard: " + hazard.getName());
                 }
-            } else if ("ignore".equalsIgnoreCase(userInput)) {
+            } else {
+                // Print a message when there is no hazard
+                System.out.println("There's no hazard to interact with.");
+            }
+        } else if ("ignore".equalsIgnoreCase(userInput)) {
+            // Handle ignore logic
+            if (hazard != null) {
                 System.out.println("You ignored the hazard: " + hazard.getName());
             } else {
-                System.out.println("Invalid action. You can either 'Use' or 'Ignore' the hazard.");
+                // Print a message when there is no hazard
+                System.out.println("There's no hazard to interact with.");
             }
         } else {
-            System.out.println("There's no hazard to interact with.");
+            System.out.println("Invalid action. You can either 'Use' or 'Ignore' the hazard.");
         }
     }
+
+
+
 
 
 

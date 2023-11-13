@@ -52,6 +52,7 @@ public class Main {
                         System.out.println("Description: " + item.getDescription());
                     } else {
                         System.out.println("There is no item at your current location.");
+                        // Check if the backpack is not empty
                     }
 
 
@@ -63,11 +64,13 @@ public class Main {
                             Item item = game.getBackPack().get(i);
                             System.out.println((i + 1) + ". " + item.getName());
                             System.out.println("\n");
+                            // System.out.println("Description: " + item.getDescription());
                         }
                     } else {
                         System.out.println("Your backpack is empty.");
                     }
                 } else {
+                    // Move the player
                     System.out.println("Parsed command: " + direction);
                     game.movePlayer(direction);
                 }
